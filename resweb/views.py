@@ -7,10 +7,9 @@ from pyres import failure
 import os
 import datetime
 
-TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), 'templates')
+SEARCH_DIRS = os.path.join(os.path.dirname(__file__), 'templates')
 class ResWeb(pystache.TemplateSpec):
-    template_path = TEMPLATE_PATH
-    renderer = pystache.Renderer(search_dirs=template_path)
+    renderer = pystache.Renderer(search_dirs=SEARCH_DIRS)
 
     def __init__(self, host):
         self.resq = host

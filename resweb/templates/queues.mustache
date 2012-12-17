@@ -29,12 +29,12 @@
     </tr>
     {{#queues}}
     <tr>
-      <td class='queue'><a class="queue" href="/queues/{{queue}}">{{queue}}</a></td>
+      <td class='queue'><a class="queue" href="{{urls.queues}}{{queue}}">{{queue}}</a></td>
       <td class='size'>{{size}}</td>
     </tr>
     {{/queues}}
     <tr class='failed'>
-      <td class='queue failed'><a class="queue" href="/failed/">failed</a></td>
+      <td class='queue failed'><a class="queue" href="{{urls.failed}}">failed</a></td>
       <td class='size'>{{fail_count}}</td>
     </tr>
   </table>

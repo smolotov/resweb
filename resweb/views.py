@@ -1,4 +1,5 @@
 import pystache
+from flask import url_for
 
 from pyres import __version__
 from resweb import __version__ as res_version
@@ -18,7 +19,28 @@ class ResWeb(pystache.TemplateSpec):
         return self.renderer.render(self)
 
     def media_folder(self):
-        return '/static/'
+        return {
+            "reset": url_for('.static', filename="reset.css"),
+            "style": url_for('.static', filename="style.css")
+            }
+
+    def urls(name):
+        return {
+            "overview": url_for('.overview'),
+            "working": url_for('.working'),
+            "queues": url_for('.queues'),
+            "failed": url_for('.failed'),
+            "failed_retry": url_for(".failed_retry"),
+            "failed_delete": url_for('.failed_delete'),
+            "delete_all_failed": url_for('.delete_all_failed'),
+            "retry_failed": url_for('.retry_failed'),
+            "workers": url_for('.workers'),
+            "stats_resque": url_for('.stats_resque'),
+            "delayed": url_for('.delayed'),
+            "workers": url_for('.workers')
+
+
+            }
 
     def close(self):
         self.resq.close()

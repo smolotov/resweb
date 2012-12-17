@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, g, redirect, request
+from flask import Flask, Blueprint, g, redirect, request, url_for
 from pyres import ResQ, failure
 
 from resweb.views import (
@@ -19,7 +19,7 @@ from base64 import b64decode
 app = Flask(__name__)
 app.config.from_object('resweb.default_settings')
 app.config.from_envvar('RESWEB_SETTINGS', silent=True)
-mod = Blueprint('resweb', __name__)
+mod = Blueprint('resweb', __name__, static_folder='static')
 
 @mod.before_request
 def before_request():
@@ -61,30 +61,30 @@ def failed_retry():
     job = b64decode(failed_job)
     decoded = ResQ.decode(job)
     failure.retry(g.pyres, decoded['queue'], job)
-    return redirect('/failed/')
+    return redirect(url_for('.failed'))
 
 @mod.route('/failed/delete/', methods=["POST"])
 def failed_delete():
     failed_job = request.form['failed_job']
     job = b64decode(failed_job)
     failure.delete(g.pyres, job)
-    return redirect('/failed/')
+    return redirect(url_for('.failed'))
 
 @mod.route('/failed/delete_all/')
 def delete_all_failed():
     #move resque:failed to resque:failed-staging
     g.pyres.redis.rename('resque:failed', 'resque:failed-staging')
     g.pyres.redis.delete('resque:failed-staging')
-    return redirect('/failed/')
+    return redirect(url_for('.failed'))
 
 
-@mod.route('/failed/retry_all')
+@mod.route('/failed/retry_all/')
 def retry_failed(number=5000):
     failures = failure.all(g.pyres, 0, number)
     for f in failures:
         j = b64decode(f['redis_value'])
         failure.retry(g.pyres, f['queue'], j)
-    return redirect('/failed/')
+    return redirect(url_for('.failed'))
 
 @mod.route('/workers/<worker_id>/')
 def worker(worker_id):
@@ -96,7 +96,7 @@ def workers():
 
 @mod.route('/stats/')
 def stats_resque():
-    return redirect('/stats/resque/')
+    return redirect(url_for('.stats', key="resque"))
 
 @mod.route('/stats/<key>/')
 def stats(key):

@@ -8,12 +8,12 @@ $(document).ready(function(){
 });
 function retry_all(){
     if(confirm('Are you sure you want to retry all?')){
-        window.location.href = '/failed/retry_all/';
+        window.location.href = 'retry_all';
     }
 }
 function delete_all(){
     if(confirm('Are you sure you want to delete all?')){
-        window.location.href = '/failed/delete_all';
+        window.location.href = 'delete_all';
     }
 
 }
@@ -52,11 +52,11 @@ function delete_all(){
 		  Payload Actions
 		</dt>
 		<dd>
-			<form action="/failed/retry/" method="post" accept-charset="utf-8">
+			<form action="{{urls.failed}}/retry/" method="post" accept-charset="utf-8">
 				<p><input type="hidden" name="failed_job" value="{{redis_value}}" id="failed_job" />
 				<p><input type="submit" value="Requeue" /></p>
 			</form>
-			<form action="/failed/delete/" method="post" accept-charset="utf-8">
+			<form action="{{urls.failed}}/delete/" method="post" accept-charset="utf-8">
 				<p><input type="hidden" name="failed_job" value="{{redis_value}}" id="failed_job" />
 				<p><input type="submit" value="Delete" /></p>
 			</form>

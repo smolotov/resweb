@@ -10,18 +10,18 @@
   </tr>
   {{#workers}}
   <tr class="{{state}}">
-    <td class='icon'><img src="/media/{{state}}.png" alt="{{state}}" title="{{state}}"></td>
+    <td class='icon'><img src="/redis/static/{{state}}.png" alt="{{state}}" title="{{state}}"></td>
 
-    <td class='where'><a href="/workers/{{w}}">{{host}}:{{pid}}</a></td>
+    <td class='where'><a href="{{urls.workers}}{{w}}">{{host}}:{{pid}}</a></td>
     <td class='queues'>
         {{#queues}}
-        <a class="queue-tag" href="/queues/{{q}}">{{q}}</a>&nbsp;
+        <a class="queue-tag" href="{{urls.queues}}{{q}}">{{q}}</a>&nbsp;
         {{/queues}}
     </td>
     <td class='process'>
       {{#data}}
         <code>{{code}}</code>
-        <small><a class="queue time" href="/working/{{w}}">{{runat}}</a></small>
+        <small><a class="queue time" href="{{urls.working}}{{w}}">{{runat}}</a></small>
       {{/data}}
       {{#nodata}}
         <span class='waiting'>Waiting for a job...</span>

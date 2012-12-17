@@ -14,15 +14,15 @@
     {{/empty_workers}}
     {{#workers}}
       <tr>
-        <td class='icon'><img src="/media/{{state}}.png" alt="{{state}}" title="{{state}}"></td>
-        <td class='where'><a href="/workers/{{w}}">{{host}}:{{pid}}</a></td>
+        <td class='icon'><img src="/redis/static/{{state}}.png" alt="{{state}}" title="{{state}}"></td>
+        <td class='where'><a href="{{urls.workers}}{{w}}">{{host}}:{{pid}}</a></td>
         <td class='queues queue'>
-          <a class="queue-tag" href="/queues/{{queue}}">{{queue}}</a>
+          <a class="queue-tag" href="{{urls.queues}}{{queue}}">{{queue}}</a>
         </td>
         <td class='process'>
             {{#data}}
                 <code>{{code}}</code>
-                <small><a class="queue time" href="/working/{{w}}">{{runat}}</a></small>
+                <small><a class="queue time" href="{{urls.working}}{{w}}">{{runat}}</a></small>
               {{/data}}
               {{#nodata}}
                 <span class='waiting'>Waiting for a job...</span>
